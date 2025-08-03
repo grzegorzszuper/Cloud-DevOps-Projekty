@@ -5,9 +5,8 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws --version
-      - $(aws ecr get-login --no-include-email --region eu-west-3)
+      - aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 746669194945.dkr.ecr.eu-west-3.amazonaws.com
       - IMAGE_URI=746669194945.dkr.ecr.eu-west-3.amazonaws.com/cv-website:latest
-      - echo IMAGE_URI=$IMAGE_URI
   build:
     commands:
       - echo Building the Docker image...
