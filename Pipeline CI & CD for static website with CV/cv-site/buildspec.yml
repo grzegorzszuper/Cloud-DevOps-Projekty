@@ -1,9 +1,6 @@
 version: 0.2
 
 phases:
-  install:
-    commands:
-      - cd cv-site  # Przejście do katalogu z Dockerfile
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
