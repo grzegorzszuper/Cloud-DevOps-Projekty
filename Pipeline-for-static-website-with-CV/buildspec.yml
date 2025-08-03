@@ -17,7 +17,8 @@ phases:
     commands:
       - echo Pushing the Docker image...
       - docker push $IMAGE_URI
-
+      - echo Writing image definitions...
+      - printf '[{"name":"cv-website","imageUri":"%s"}]' $IMAGE_URI > imagedefinitions.json
 artifacts:
   files:
-    - '**/*'
+    - imagedefinitions.json
