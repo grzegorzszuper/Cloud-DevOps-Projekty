@@ -10,7 +10,7 @@ phases:
   build:
     commands:
       - echo Building the Docker image...
-      - cd "Pipeline CI & CD for static website with CV"
+      - cd "Pipeline-for-static-website-with-CV"
       - ls -la
       - docker build -t $IMAGE_URI .
   post_build:
