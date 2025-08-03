@@ -2,7 +2,6 @@ version: 0.2
 
 env:
   variables:
-    PROJECT_DIR: "Pipeline CI & CD for static website with CV"
     IMAGE_URI: "746669194945.dkr.ecr.eu-west-3.amazonaws.com/cv-website:latest"
 
 phases:
@@ -15,7 +14,6 @@ phases:
   build:
     commands:
       - echo Building the Docker image...
-      - cd "$PROJECT_DIR"
       - docker build -t $IMAGE_URI .
 
   post_build:
