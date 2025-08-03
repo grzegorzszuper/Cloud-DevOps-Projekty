@@ -7,6 +7,7 @@ phases:
       - aws --version
       - $(aws ecr get-login --no-include-email --region eu-west-3)
       - IMAGE_URI=746669194945.dkr.ecr.eu-west-3.amazonaws.com/cv-website:latest
+      - echo IMAGE_URI=$IMAGE_URI
   build:
     commands:
       - echo Building the Docker image...
@@ -16,5 +17,9 @@ phases:
     commands:
       - echo Pushing the Docker image...
       - docker push $IMAGE_URI
+      - echo Writing imagedefinitions.json file...
+      - printf '[{"name":"cv-service","imageUri":"%s"}]' $IMAGE_URI > imagedefinitions.json
+
 artifacts:
-  files: '**/*'
+  files:
+    - imagedefinitions.json
