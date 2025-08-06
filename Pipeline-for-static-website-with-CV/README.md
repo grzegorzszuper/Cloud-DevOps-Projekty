@@ -1,55 +1,59 @@
-# 🌐 CV Website – Automatyczne wdrażanie (CI/CD) na AWS z Dockerem i ECS Fargate
+# 🌐 CV Website – Automatic CI/CD Deployment on AWS using Docker & ECS Fargate
 
-Ten projekt przedstawia sposób automatycznego wdrażania statycznej strony internetowej (CV) za pomocą kontenera Docker, usług AWS (CodePipeline, ECR, ECS Fargate) oraz publicznego Load Balancera. Po każdej zmianie w repozytorium GitHub uruchamiany jest pipeline, który buduje nowy obraz i wdraża stronę bez potrzeby ręcznej ingerencji.
-
----
-
-## 🖼️ Podgląd projektu
-
-### 📄 Widok gotowej strony:
-
-![Widok strony](screenshots/website-preview.png)
+This project demonstrates how to automatically deploy a static CV website using Docker containers, AWS services (CodePipeline, ECR, ECS Fargate), and a public Load Balancer. Every push to the GitHub repository triggers a pipeline that builds a new image and deploys the website without any manual intervention.
 
 ---
 
-## 🧭 Architektura rozwiązania
-
-Poniższy diagram przedstawia ogólną architekturę infrastruktury:
-
-![Model architektury](screenshots/model.png)
-
-- Kontener Docker uruchamiany jest na **ECS Fargate**
-- Użytkownicy uzyskują dostęp przez **Application Load Balancer**
-- Obrazy przechowywane są w **Amazon ECR**
-- Pipeline CI/CD automatycznie aktualizuje wersję
+🇬🇧 English | [🇵🇱 Wersja polska](README_PL.md)
 
 ---
 
-## 🔄 Proces CI/CD
+## 🖼️ Project Preview
 
-1. Kod znajduje się w repozytorium GitHub.
-2. AWS CodePipeline wykrywa zmianę i uruchamia proces budowania.
-3. CodeBuild tworzy obraz Dockera i wysyła go do Amazon ECR.
-4. ECS Fargate wdraża nową wersję kontenera.
-5. Strona jest dostępna publicznie przez Load Balancer.
+### 📄 Final website view:
 
-### ✅ Widok pipeline CodePipeline:
+![Website preview](screenshots/website-preview.png)
+
+---
+
+## 🧭 Infrastructure Architecture
+
+The following diagram presents the general infrastructure design:
+
+![Architecture model](screenshots/model.png)
+
+- The Docker container is deployed on **ECS Fargate**
+- Users access it via an **Application Load Balancer (ALB)**
+- Images are stored in **Amazon ECR**
+- The CI/CD pipeline automatically updates the running version
+
+---
+
+## 🔄 CI/CD Process
+
+1. Source code is hosted on GitHub.
+2. AWS CodePipeline detects changes and triggers the process.
+3. AWS CodeBuild builds the Docker image and pushes it to Amazon ECR.
+4. ECS Fargate deploys the updated container.
+5. The website is served publicly via the Load Balancer.
+
+### ✅ CodePipeline overview:
 
 ![CodePipeline](screenshots/codepipeline.png)
 
 ---
 
-## 🚀 Główne funkcjonalności
+## 🚀 Key Features
 
-- Hostowanie statycznej strony w kontenerze Docker
-- Automatyczne CI/CD z użyciem CodePipeline + CodeBuild
-- Przechowywanie obrazów w Amazon ECR
-- Deployment na ECS Fargate (bez zarządzania serwerami)
-- Publiczny dostęp przez Application Load Balancer (ALB)
+- Static site hosted in a Docker container
+- Fully automated CI/CD with CodePipeline and CodeBuild
+- Image registry using Amazon ECR
+- Deployment to ECS Fargate (serverless)
+- Public access via Application Load Balancer (ALB)
 
 ---
 
-## 🛠️ Technologie
+## 🛠️ Tech Stack
 
 - **Docker**
 - **Amazon ECS (Fargate)**
@@ -60,40 +64,40 @@ Poniższy diagram przedstawia ogólną architekturę infrastruktury:
 
 ---
 
-## 📸 Screeny z AWS
+## 📸 AWS Screenshots
 
-### 🏗️ Historia buildów – CodeBuild:
+### 🏗️ CodeBuild build history:
 
 ![Build history](screenshots/codebuild-history.png)
 
 ---
 
-### 📦 Obraz Dockera w Amazon ECR:
+### 📦 Docker image in Amazon ECR:
 
-![ECR – obrazy](screenshots/ecr-images.png)
-![ECR – repozytorium](screenshots/ecr-repo.png)
+![ECR – images](screenshots/ecr-images.png)
+![ECR – repository](screenshots/ecr-repo.png)
 
 ---
 
-### 🚢 Zadanie uruchomione w ECS Fargate:
+### 🚢 Running ECS task:
 
 ![ECS Task](screenshots/ecs-task.png)
 
 ---
 
-### ⚙️ Usługa ECS:
+### ⚙️ ECS Service:
 
 ![ECS Service](screenshots/ecs-service.png)
 
 ---
 
-### 🌐 Load Balancer (ALB):
+### 🌐 Application Load Balancer:
 
 ![Load Balancer](screenshots/alb.png)
 
 ---
 
-## 📂 Struktura projektu
+## 📁 Project Structure
 
 ```txt
 📁 Pipeline-for-static-website-with-CV/
