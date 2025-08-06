@@ -25,17 +25,17 @@ Poniższy diagram przedstawia ogólną architekturę infrastruktury:
 
 ---
 
-## 🔄 Przepływ procesu CI/CD
+## 🔄 Proces CI/CD
 
-To schemat pokazujący pełen cykl automatycznego wdrażania:
+1. Kod znajduje się w repozytorium GitHub.
+2. AWS CodePipeline wykrywa zmianę i uruchamia proces budowania.
+3. CodeBuild tworzy obraz Dockera i wysyła go do Amazon ECR.
+4. ECS Fargate wdraża nową wersję kontenera.
+5. Strona jest dostępna publicznie przez Load Balancer.
 
-![Diagram CI/CD](screenshots/diagram-ci-cd.png)
+### ✅ Widok pipeline CodePipeline:
 
-1. Kod strony znajduje się w repozytorium GitHub.
-2. AWS CodePipeline wykrywa zmianę i inicjuje proces.
-3. AWS CodeBuild buduje obraz Dockera i wysyła go do ECR.
-4. ECS Fargate uruchamia zaktualizowany kontener.
-5. Strona staje się dostępna przez Load Balancer.
+![CodePipeline](screenshots/codepipeline.png)
 
 ---
 
@@ -61,12 +61,6 @@ To schemat pokazujący pełen cykl automatycznego wdrażania:
 ---
 
 ## 📸 Screeny z AWS
-
-### ✅ Widok pipeline CodePipeline:
-
-![CodePipeline](screenshots/codepipeline.png)
-
----
 
 ### 🏗️ Historia buildów – CodeBuild:
 
@@ -101,21 +95,20 @@ To schemat pokazujący pełen cykl automatycznego wdrażania:
 
 ## 📂 Struktura projektu
 
-📁 Pipeline-for-static-website-with-CV/     # Główny folder repozytorium
-├── 📁 screenshots/                         # Zrzuty ekranu użyte w README
-│   ├── website-preview.png                # Widok końcowej strony
-│   ├── model.png                          # Schemat architektury infrastruktury
-│   ├── diagram-ci-cd.png                  # Diagram przedstawiający pipeline CI/CD
-│   ├── codepipeline.png                   # Screen z AWS CodePipeline
-│   ├── codebuild-history.png              # Historia buildów CodeBuild
-│   ├── ecr-images.png                     # Lista obrazów w ECR
-│   ├── ecr-repo.png                       # Widok repozytorium ECR
-│   ├── ecs-task.png                       # Informacja o uruchomionym tasku ECS
-│   ├── ecs-service.png                    # Status działającej usługi ECS
-│   └── alb.png                            # Informacje o Load Balancerze
-
-├── Dockerfile                             # Plik budujący obraz Dockera
-├── buildspec.yml                          # Konfiguracja AWS CodeBuild
-├── index.html                             # Plik HTML Twojej strony CV
-├── style.css                              # Styl strony
-└── README.md                              # Dokumentacja projektu
+```txt
+📁 Pipeline-for-static-website-with-CV/
+├── 📁 screenshots/
+│   ├── website-preview.png
+│   ├── model.png
+│   ├── codepipeline.png
+│   ├── codebuild-history.png
+│   ├── ecr-images.png
+│   ├── ecr-repo.png
+│   ├── ecs-task.png
+│   ├── ecs-service.png
+│   └── alb.png
+├── Dockerfile
+├── buildspec.yml
+├── index.html
+├── style.css
+└── README.md
