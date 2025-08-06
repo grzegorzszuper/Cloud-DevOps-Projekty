@@ -1,6 +1,6 @@
 # 🌐 CV Website – Automatyczne wdrażanie (CI/CD) na AWS z Dockerem i ECS Fargate
 
-Ten projekt pokazuje, jak automatycznie wdrożyć statyczną stronę internetową (CV) za pomocą kontenera Docker, AWS CodePipeline, ECR oraz ECS Fargate. Dzięki temu każda zmiana w kodzie powoduje automatyczne zbudowanie i wdrożenie nowej wersji strony.
+Ten projekt przedstawia sposób automatycznego wdrażania statycznej strony internetowej (CV) za pomocą kontenera Docker, usług AWS (CodePipeline, ECR, ECS Fargate) oraz publicznego Load Balancera. Po każdej zmianie w repozytorium GitHub uruchamiany jest pipeline, który buduje nowy obraz i wdraża stronę bez potrzeby ręcznej ingerencji.
 
 ---
 
@@ -12,14 +12,40 @@ Ten projekt pokazuje, jak automatycznie wdrożyć statyczną stronę internetow�
 
 ---
 
+## 🧭 Architektura rozwiązania
+
+Poniższy diagram przedstawia ogólną architekturę infrastruktury:
+
+![Model architektury](screenshots/model.png)
+
+- Kontener Docker uruchamiany jest na **ECS Fargate**
+- Użytkownicy uzyskują dostęp przez **Application Load Balancer**
+- Obrazy przechowywane są w **Amazon ECR**
+- Pipeline CI/CD automatycznie aktualizuje wersję
+
+---
+
+## 🔄 Przepływ procesu CI/CD
+
+To schemat pokazujący pełen cykl automatycznego wdrażania:
+
+![Diagram CI/CD](screenshots/diagram-ci-cd.png)
+
+1. Kod strony znajduje się w repozytorium GitHub.
+2. AWS CodePipeline wykrywa zmianę i inicjuje proces.
+3. AWS CodeBuild buduje obraz Dockera i wysyła go do ECR.
+4. ECS Fargate uruchamia zaktualizowany kontener.
+5. Strona staje się dostępna przez Load Balancer.
+
+---
+
 ## 🚀 Główne funkcjonalności
 
 - Hostowanie statycznej strony w kontenerze Docker
-- CI/CD zbudowane na CodePipeline + CodeBuild
-- Automatyczne budowanie i publikacja do ECR
-- Uruchamianie kontenera na ECS Fargate
+- Automatyczne CI/CD z użyciem CodePipeline + CodeBuild
+- Przechowywanie obrazów w Amazon ECR
+- Deployment na ECS Fargate (bez zarządzania serwerami)
 - Publiczny dostęp przez Application Load Balancer (ALB)
-- Pełna automatyzacja – brak ręcznego logowania do AWS
 
 ---
 
@@ -28,24 +54,15 @@ Ten projekt pokazuje, jak automatycznie wdrożyć statyczną stronę internetow�
 - **Docker**
 - **Amazon ECS (Fargate)**
 - **Amazon ECR**
-- **AWS CodePipeline / CodeBuild**
-- **AWS ALB**
+- **AWS CodePipeline**
+- **AWS CodeBuild**
+- **Application Load Balancer (ALB)**
 
 ---
 
-## ⚙️ Jak działa pipeline
+## 📸 Screeny z AWS
 
-1. Zmiana w repozytorium (GitHub push)
-2. CodePipeline wykrywa zmianę
-3. CodeBuild buduje obraz Dockera i publikuje go do ECR
-4. ECS uruchamia zaktualizowany kontener
-5. Strona jest dostępna publicznie
-
----
-
-## 🔄 Etapy wdrożenia
-
-### ✅ CodePipeline: Source → Build → Deploy
+### ✅ Widok pipeline CodePipeline:
 
 ![CodePipeline](screenshots/codepipeline.png)
 
@@ -57,15 +74,14 @@ Ten projekt pokazuje, jak automatycznie wdrożyć statyczną stronę internetow�
 
 ---
 
-### 📦 Obraz Dockera w ECR:
+### 📦 Obraz Dockera w Amazon ECR:
 
-![ECR Images](screenshots/ecr-images.png)
-
-![ECR Repo](screenshots/ecr-repo.png)
+![ECR – obrazy](screenshots/ecr-images.png)
+![ECR – repozytorium](screenshots/ecr-repo.png)
 
 ---
 
-### 🚢 Zadanie ECS:
+### 🚢 Zadanie uruchomione w ECS Fargate:
 
 ![ECS Task](screenshots/ecs-task.png)
 
@@ -83,4 +99,23 @@ Ten projekt pokazuje, jak automatycznie wdrożyć statyczną stronę internetow�
 
 ---
 
+## 📂 Struktura projektu
 
+📁 Pipeline-for-static-website-with-CV/     # Główny folder repozytorium
+├── 📁 screenshots/                         # Zrzuty ekranu użyte w README
+│   ├── website-preview.png                # Widok końcowej strony
+│   ├── model.png                          # Schemat architektury infrastruktury
+│   ├── diagram-ci-cd.png                  # Diagram przedstawiający pipeline CI/CD
+│   ├── codepipeline.png                   # Screen z AWS CodePipeline
+│   ├── codebuild-history.png              # Historia buildów CodeBuild
+│   ├── ecr-images.png                     # Lista obrazów w ECR
+│   ├── ecr-repo.png                       # Widok repozytorium ECR
+│   ├── ecs-task.png                       # Informacja o uruchomionym tasku ECS
+│   ├── ecs-service.png                    # Status działającej usługi ECS
+│   └── alb.png                            # Informacje o Load Balancerze
+
+├── Dockerfile                             # Plik budujący obraz Dockera
+├── buildspec.yml                          # Konfiguracja AWS CodeBuild
+├── index.html                             # Plik HTML Twojej strony CV
+├── style.css                              # Styl strony
+└── README.md                              # Dokumentacja projektu
